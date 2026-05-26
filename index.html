@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>⚡ VORTEX INJECTOR | WINGO 30S PREDICTOR</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: radial-gradient(circle at 20% 30%, #0a0c14, #020408);
+            font-family: 'Inter', system-ui, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: -20%;
+            left: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.3), transparent 70%);
+            filter: blur(80px);
+            z-index: 0;
+            pointer-events: none;
+            animation: driftGlow 14s infinite alternate;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -20%;
+            right: -20%;
+            width: 550px;
+            height: 550px;
+            background: radial-gradient(circle, rgba(255, 100, 0, 0.25), transparent 70%);
+            filter: blur(80px);
+            z-index: 0;
+            pointer-events: none;
+            animation: driftGlow2 11s infinite alternate;
+        }
+        @keyframes driftGlow {
+            0% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+            100% { transform: translate(80px, 60px) scale(1.3); opacity: 0.7; }
+        }
+        @keyframes driftGlow2 {
+            0% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+            100% { transform: translate(-60px, -40px) scale(1.4); opacity: 0.6; }
+        }
+        .glass-card {
+            background: rgba(6, 10, 20, 0.85);
+            backdrop-filter: blur(18px);
+            border-radius: 2rem;
+            border: 1px solid rgba(255, 200, 50, 0.5);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 215, 0, 0.15) inset;
+            width: 100%;
+            max-width: 580px;
+            margin: 0 auto;
+        }
+        .dashboard-container { max-width: 860px; padding: 34px 28px 40px; position: relative; z-index: 2; }
+        .login-container { padding: 34px 28px 40px; position: relative; z-index: 2; }
+        .vortex-glow { position: relative; }
+       .vortex-glow::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 2rem;
+            background: linear-gradient(135deg, #ffd966, #ff8c00, #ffd700, #ffb347);
+            background-size: 300% 300%;
+            z-index: -1;
+            animation: borderVortex 3s ease infinite;
+            filter: blur(5px);
+            opacity: 0.7;
+        }
+        @keyframes borderVortex {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .logo-area { text-align: center; margin-bottom: 28px; }
+        .icon-vortex {
+            display: inline-flex;
+            background: radial-gradient(circle at 30% 25%, #f5b042, #b46f0a);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(255, 160, 0, 0.7), 0 0 40px rgba(255, 215, 0, 0.4);
+            animation: pulseRing 2.2s infinite;
+        }
+        .icon-vortex i { font-size: 2.8rem; color: white; filter: drop-shadow(0 0 8px gold); }
+        @keyframes pulseRing {
+            0% { box-shadow: 0 0 0 0 rgba(255, 185, 0, 0.6); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 185, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 185, 0, 0); }
+        }
+        h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFE484, #F5A623);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-top: 12px;
+            letter-spacing: 1px;
+            text-shadow: 0px 4px 10px rgba(245, 166, 35, 0.2);
+        }
+        .input-field {
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(255, 200, 50, 0.7);
+            border-radius: 50px;
+            padding: 14px 20px;
+            width: 100%;
+            font-size: 1rem;
+            color: #fff3cf;
+            font-weight: 500;
+            outline: none;
+            transition: 0.2s;
+        }
+        .input-field:focus { border-color: #ffb347; box-shadow: 0 0 12px rgba(255, 180, 50, 0.6); }
+        
+        .btn-gold {
+            background: linear-gradient(90deg, #f0b90b, #ffa500, #ffc837, #f0b90b);
+            background-size: 300% 100%;
+            border: none;
+            padding: 15px 24px;
+            border-radius: 60px;
+            font-weight: 800;
+            font-size: 1.05rem;
+            color: #03050a;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 165, 0, 0.4);
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-gold:hover {
+            background-position: 100% 0;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 200, 0, 0.7);
+        }
+
+        /* ========= STATS BUTTONS (TOTAL, WIN, LOSS, JACKPOT) ========= */
+        .stats-rack {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 12px;
+            margin: 24px 0 20px;
+        }
+        .stat-btn {
+            flex: 1;
+            min-width: 85px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1.5px solid rgba(255, 200, 50, 0.8);
+            border-radius: 60px;
+            padding: 12px 8px;
+            text-align: center;
+            font-weight: 800;
+            font-size: 0.9rem;
+            color: #fff3cf;
+            transition: all 0.25s ease;
+            cursor: default;
+            box-shadow: 0 0 6px rgba(255, 200, 0, 0.3);
+            animation: statGlowPulse 1.8s infinite alternate;
+            letter-spacing: 0.5px;
+        }
+        .stat-btn i {
+            font-size: 1.2rem;
+            margin-right: 8px;
+            color: #ffd966;
+        }
+        .stat-btn span {
+            font-size: 1.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFE484, #F5A623);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-left: 5px;
+        }
+        .stat-btn:hover {
+            transform: translateY(-3px);
+            border-color: #ffd700;
+            box-shadow: 0 0 18px rgba(255, 215, 0, 0.6);
+            background: rgba(0, 0, 0, 0.85);
+        }
+        @keyframes statGlowPulse {
+            0% { border-color: rgba(255, 180, 50, 0.6); box-shadow: 0 0 4px rgba(255, 180, 50, 0.3);}
+            100% { border-color: #ffd966; box-shadow: 0 0 12px rgba(255, 215, 0, 0.6);}
+        }
+
+        /* ========= TELEGRAM & CONTACT BUTTONS (GREEN PULSE) ========= */
+        .telegram-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 18px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .tg-btn {
+            background: rgba(0, 0, 0, 0.85) !important;
+            border: 2px solid #2ecc71 !important;
+            border-radius: 60px !important;
+            padding: 14px 32px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 12px !important;
+            color: #ffffff !important;
+            font-weight: 800 !important;
+            text-decoration: none !important;
+            font-size: 1.2rem !important;
+            letter-spacing: 1px !important;
+            transition: all 0.3s ease !important;
+            box-shadow: 0 0 10px rgba(46, 204, 113, 0.4) !important;
+            animation: greenBtnPulse 1.2s infinite alternate !important;
+            backdrop-filter: blur(4px);
+        }
+        .tg-btn i {
+            font-size: 1.3rem;
+        }
+        .tg-btn.admin-btn {
+            border-color: #2ecc71 !important;
+            animation: greenBtnPulse 1.2s infinite alternate !important;
+        }
+        .tg-btn:hover {
+            transform: translateY(-4px) scale(1.02) !important;
+            background: #2ecc71 !important;
+            color: #000 !important;
+            box-shadow: 0 0 28px #2ecc71 !important;
+            border-color: #ffffff !important;
+        }
+        
+        @keyframes greenBtnPulse {
+            0% {
+                box-shadow: 0 0 6px #2ecc71; border-color: #2ecc71;
+            }
+          100% {
+                box-shadow: 0 0 22px #00ffaa; border-color: #9bffcf;
+            }
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 22px;
+            gap: 10px;
+        }
+        
+        .live-status-container {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0,0,0,0.5);
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+        }
+        .green-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #2ecc71;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #2ecc71;
+            animation: blinkDot 1s infinite alternate;
+        }
+        @keyframes blinkDot {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        .live-timer-btn {
+            background: linear-gradient(135deg, #100a00, #261600);
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #ffd700;
+            border: 2px solid #ffd700;
+            cursor: pointer;
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+            box-shadow: 0 0 12px rgba(255, 215, 0, 0.3);
+            animation: neonBlink 1.5s infinite alternate;
+            transition: 0.3s ease;
+        }
+        .live-timer-btn:hover {
+            transform: scale(1.05);
+            background: #ffd700;
+            color: #000;
+        }
+
+        .period-box-btn {
+            background: linear-gradient(135deg, #0d0e15, #1b1e2e);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            color: #ffffff;
+            border: 2px solid #ff9f43;
+            box-shadow: 0 0 10px rgba(255, 159, 67, 0.3);
+            cursor: pointer;
+            animation: neonBlinkOrange 1.8s infinite alternate;
+            transition: 0.3s ease;
+            display: inline-block;
+        }
+        .period-box-btn:hover {
+            transform: scale(1.05);
+            border-color: #ffffff;
+        }
+
+        @keyframes neonBlink {
+            0% { border-color: #ccac00; box-shadow: 0 0 6px rgba(255, 215, 0, 0.2); }
+            100% { border-color: #ffd700; box-shadow: 0 0 20px rgba(255, 215, 0, 0.8), inset 0 0 8px rgba(255, 215, 0, 0.4); }
+        }
+        @keyframes neonBlinkOrange {
+            0% { border-color: #b36b00; box-shadow: 0 0 6px rgba(255, 159, 67, 0.2); }
+            100% { border-color: #ff9f43; box-shadow: 0 0 18px rgba(255, 159, 67, 0.7); }
+        }
+
+        .prediction-panel {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 36px;
+            padding: 24px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 200, 0, 0.7);
+            text-align: center;
+        }
+        .big-small-badge {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(145deg, #FFD966, #E68A00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 15px rgba(255, 140, 0, 0.5);
+            letter-spacing: 2px;
+        }
+        .numbers-jackpot { display: flex; justify-content: center; gap: 35px; margin: 20px 0; }
+        .number-bubble {
+            background: radial-gradient(ellipse at 30% 35%, #2a2412, #050301);
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: #ffcd7e;
+            border: 2px solid #ffa500;
+            box-shadow: 0 0 20px rgba(255, 160, 0, 0.7);
+        }
+        .history-table-wrapper {
+            overflow-x: auto;
+            margin-top: 20px;
+            border-radius: 28px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 6px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        
+        th, td { padding: 12px 8px; text-align: center; border-bottom: 1px solid rgba(255, 215, 0, 0.15); color: #ffffff; font-weight: 500; }
+        th { color: #ffd700; font-weight: 800; background: rgba(0,0,0,0.5); letter-spacing: 0.5px; }
+        
+        /* 历史表格在小屏幕上自动缩小字体，避免横向滑动（确保内容完全可见） */
+        @media (max-width: 680px) {
+            table { font-size: 0.7rem; }
+            th, td { padding: 8px 4px; white-space: normal; word-break: break-word; }
+            .stat-btn { font-size: 0.75rem; padding: 10px 4px; }
+            .stat-btn span { font-size: 1rem; }
+            .number-bubble { width: 65px; height: 65px; font-size: 1.8rem; }
+            .big-small-badge { font-size: 2.3rem; }
+        }
+        
+        .win { color: #00ff66; font-weight: 900; text-shadow: 0 0 10px rgba(0,255,102,0.6); }
+        .loss { color: #ff3333; font-weight: 900; text-shadow: 0 0 10px rgba(255,51,51,0.5); }
+        .jackpot { color: #ffff00; font-weight: 900; text-shadow: 0 0 15px #ffff00; animation: pulseGlow 0.8s infinite alternate; }
+        
+        @keyframes pulseGlow {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
+        }
+        
+        .update-flash { animation: flashGold 0.4s ease; }
+        @keyframes flashGold {
+            0% { border-color: rgba(255, 200, 0, 0.5); }
+            50% { border-color: #ffd700; box-shadow: 0 0 25px gold; }
+            100% { border-color: rgba(255, 200, 0, 0.5); }
+        }
+
+        footer { 
+            margin-top: 24px; 
+            font-size: 0.85rem; 
+            text-align: center; 
+            color: #ffd700; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            gap: 16px; 
+            flex-wrap: wrap;
+        }
+        .footer-btn {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid #ff9f43;
+            color: #ffffff !important;
+            padding: 8px 18px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 8px rgba(255, 159, 67, 0.3);
+        }
+        .footer-btn.channel-btn {
+            border-color: #f0b90b;
+            box-shadow: 0 0 8px rgba(240, 185, 11, 0.3);
+            animation: footerGoldPulse 1.5s infinite alternate;
+        }
+        .footer-btn.support-btn {
+            border-color: #ff4757;
+            box-shadow: 0 0 8px rgba(255, 71, 87, 0.3);
+            animation: footerRedPulse 1.5s infinite alternate;
+        }
+        .footer-btn:hover {
+            transform: translateY(-2px);
+            color: #000000 !important;
+            box-shadow: 0 0 15px currentColor;
+        }
+        .footer-btn.channel-btn:hover { background: #f0b90b; }
+        .footer-btn.support-btn:hover { background: #ff4757; }
+
+        @keyframes footerGoldPulse {
+            0% { box-shadow: 0 0 4px #f0b90b; }
+            100% { box-shadow: 0 0 14px #ffd700; }
+        }
+        @keyframes footerRedPulse {
+            0% { box-shadow: 0 0 4px #ff4757; }
+            100% { box-shadow: 0 0 14px #ff6b81; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen" class="glass-card vortex-glow" style="max-width: 480px;">
+    <div class="login-container">
+        <div class="logo-area">
+            <div class="icon-vortex"><i class="fas fa-tornado"></i></div>
+            <h2>VORTEX INJECTOR</h2>
+            <div style="font-size: 0.8rem; color: #ffb347; margin-top: 5px;"><i class="fas fa-bolt"></i> PREMIUM PREDICTOR v5.0</div>
+        </div>
+        <input type="text" id="uidInput" class="input-field" placeholder="USER ID (min 7 characters)" style="margin-bottom: 16px;" value="">
+        <input type="password" id="pwdInput" class="input-field" placeholder="INJECTION KEY" style="margin-bottom: 24px;" value="">
+       <button id="loginBtn" class="btn-gold"><i class="fas fa-key"></i> UNLOCK PREDICTION</button>
+        <div class="telegram-buttons">
+            <a href="https://t.me/vortexinjector_win" target="_blank" class="tg-btn"><i class="fab fa-telegram"></i> JOIN TELEGRAM</a>
+            <a href="https://t.me/vortex_admin" target="_blank" class="tg-btn admin-btn"><i class="fas fa-headset"></i> CONTACT ADMIN</a>
+        </div>
+        <footer style="margin-top: 20px;">Secure 30s Wingo | AI Tri-Logic Engine</footer>
+    </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboardScreen" class="glass-card vortex-glow" style="max-width: 860px; display: none;">
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <div>
+                <i class="fas fa-bolt" style="color:#ffc107;"></i> <strong style="color:#ffd966; font-size: 1.3rem;">VORTEX INJECTOR</strong> 
+                <span class="live-status-container" style="margin-left: 10px;">
+                    <span class="green-dot"></span>
+                    <span style="color:#ffffff; font-weight:600;">LIVE WINGO 30S</span>
+                </span>
+            </div>
+            <button class="live-timer-btn" id="timerDisplay"><i class="far fa-clock"></i> Next: 30s</button>
+        </div>
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.5); border-radius: 60px; padding: 10px 20px; margin-bottom: 16px; border: 1px solid rgba(255,215,0,0.15);">
+            <span class="label-text"><i class="fas fa-hashtag"></i> RUNNING PERIOD: 
+                <button id="currentPeriodId" class="period-box-btn">Loading...</button>
+            </span>
+            <span class="label-text"><i class="fas fa-chart-simple"></i> LAST RESULT (B/S): 
+                <button id="lastResultSpan" class="period-box-btn" style="border-color: #00ff66; animation: none; color: #00ff66;">---</button>
+            </span>
+        </div>
+        
+        <div class="prediction-panel" id="predPanel">
+            <div style="font-size: 0.9rem; letter-spacing: 2px; color:#ffd700; font-weight: 700;"><i class="fas fa-chart-line"></i> NEXT PREDICTION</div>
+            <div class="big-small-badge" id="predictedBS">--</div>
+            <div class="numbers-jackpot">
+                <div class="number-bubble" id="predNum1">?</div>
+                <div class="number-bubble" id="predNum2">?</div>
+            </div>
+            <div style="margin-top: 8px; color: #ffffff; font-size: 0.85rem; font-weight: 600;"><i class="fas fa-gem" style="color: #ffff00;"></i> ANY NUMBER MATCHES = JACKPOT🎰</div>
+        </div>
+
+        <!-- NEW STATS BUTTONS (TOTAL, WIN, LOSS, JACKPOT) -->
+        <div class="stats-rack">
+            <div class="stat-btn"><i class="fas fa-chart-pie"></i> TOTAL <span id="statTotal">0</span></div>
+            <div class="stat-btn"><i class="fas fa-trophy"></i> WIN <span id="statWin">0</span></div>
+            <div class="stat-btn"><i class="fas fa-skull-crossbones"></i> LOSS <span id="statLoss">0</span></div>
+            <div class="stat-btn"><i class="fas fa-gem"></i> JACKPOT <span id="statJackpot">0</span></div>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+                <i class="fas fa-history" style="color:#ffd700;"></i> <span style="font-weight:800; color:#ffd700;">PREDICTION HISTORY</span>
+            </div>
+            <div class="history-table-wrapper">
+                <table id="historyTable">
+                    <thead><tr><th>PERIOD</th><th>PREDICT (B/S)</th><th>PREDICT NUMS</th><th>RESULT (B/S)</th><th>STATUS</th></tr></thead>
+                    <tbody id="historyBody"><tr><td colspan="5" style="text-align:center; color: #ffd700;">Syncing with lottery engine...</td></tr></tbody>
+                </table>
+            </div>
+        </div>
+        <footer>
+            <a href="https://t.me/vortexinjector_win" target="_blank" class="footer-btn channel-btn"><i class="fab fa-telegram"></i> Official Channel</a> · 
+            <a href="https://t.me/vortex_admin" target="_blank" class="footer-btn support-btn"><i class="fas fa-headset"></i> Contact Support</a>
+        </footer>
+    </div>
+</div>
+
+<script>
+    const API_URL = "https://draw.ar-lottery01.com/WinGo/WinGo_30S/GetHistoryIssuePage.json";
+    
+    function classifyResultFromDigit(digit) { return digit >= 5 ? "BIG" : "SMALL"; }
+    function evaluate(pred, actualDigit) {
+        if(pred.numbers.includes(actualDigit)) return "JACKPOT🎰";
+        let actualBS = classifyResultFromDigit(actualDigit);
+        return pred.bigSmall === actualBS ? "WIN" : "LOSS";
+    }
+    
+    let lastProcessedIssue = null;
+    let lastAddedHistoryIssue = null;
+    let displayHistory = [];
+    let pendingPrediction = null;
+    let pendingPeriod = null;
+    let last5Results = [];
+    let last5Numbers = [];
+    let fetchLock = false;
+    let timerInterval = null;
+    
+    const loginScreen = document.getElementById('loginScreen');
+    const dashboard = document.getElementById('dashboardScreen');
+    const loginBtn = document.getElementById('loginBtn');
+    const uidInput = document.getElementById('uidInput');
+    const pwdInput = document.getElementById('pwdInput');
+    const predictedBSEl = document.getElementById('predictedBS');
+    const predNum1El = document.getElementById('predNum1');
+    const predNum2El = document.getElementById('predNum2');
+    const periodSpan = document.getElementById('currentPeriodId');
+    const lastResultSpan = document.getElementById('lastResultSpan');
+    const timerDisplay = document.getElementById('timerDisplay');
+    const historyBody = document.getElementById('historyBody');
+    const predPanel = document.getElementById('predPanel');
+    
+    // Stats elements
+    const statTotalSpan = document.getElementById('statTotal');
+    const statWinSpan = document.getElementById('statWin');
+    const statLossSpan = document.getElementById('statLoss');
+    const statJackpotSpan = document.getElementById('statJackpot');
+    
+    function updateStats() {
+        let total = displayHistory.length;
+        let win = displayHistory.filter(r => r.status === "WIN").length;
+        let loss = displayHistory.filter(r => r.status === "LOSS").length;
+        let jack = displayHistory.filter(r => r.status === "JACKPOT🎰").length;
+        statTotalSpan.innerText = total;
+        statWinSpan.innerText = win;
+        statLossSpan.innerText = loss;
+        statJackpotSpan.innerText = jack;
+    }
+    
+    function renderHistory() {
+        if(!historyBody) return;
+        if(displayHistory.length === 0) {
+            historyBody.innerHTML = '<tr><td colspan="5" style="text-align:center; color: #ffd700;">Awaiting results...</td></tr>';
+            updateStats();
+            return;
+        }
+        let html = '';
+        for(let rec of displayHistory) {
+            let cls = "loss";
+            if(rec.status === "WIN") cls = "win";
+            if(rec.status === "JACKPOT🎰") cls = "jackpot";
+            html += `<tr>
+                        <td>${rec.period}</td>
+                        <td>${rec.predictBS}</td>
+                        <td>${rec.predNums}</td>
+                        <td>${rec.resultBS}</td>
+                        <td class="${cls}">${rec.status}</td>
+                     </tr>`;
+        }
+        historyBody.innerHTML = html;
+        updateStats();
+    }
+    
+    function addHistoryOnce(period, pred, actualDigit, status) {
+        if(lastAddedHistoryIssue === period) return;
+        let resultBS = classifyResultFromDigit(actualDigit);
+        displayHistory.unshift({
+            period: period,
+            predictBS: pred.bigSmall,
+            predNums: pred.numbers.join(","),
+            resultBS: resultBS,
+            status: status
+        });
+        if(displayHistory.length > 20) displayHistory.pop();
+        renderHistory();
+        lastAddedHistoryIssue = period;
+    }
+    
+    function updatePredictionUI(pred) {
+        if(pred) {
+            predictedBSEl.innerText = pred.bigSmall;
+            predNum1El.innerText = pred.numbers[0];
+            predNum2El.innerText = pred.numbers[1];
+        }
+    }
+    
+    function generatePredictionFromHistory(last5BS, last5Nums) {
+        if(last5BS.length < 3) return { bigSmall: "SMALL", numbers: [0,1] };
+        let nextP = "";
+        if(last5BS[0] === last5BS[1] && last5BS[1] === last5BS[2]) {
+            nextP = last5BS[0];
+        } else {
+            nextP = (last5BS[0] === "BIG") ? "SMALL" : "BIG";
+        }
+        let sum = last5Nums.slice(0,5).reduce((a,b)=>a+b,0);
+        let targetNums = [];
+        if(nextP === "BIG") {
+            targetNums = (sum > 20) ? [0,2] : [1,3];
+        } else {
+            targetNums = (sum < 25) ? [7,9] : [6,8];
+        }
+        return { bigSmall: nextP, numbers: targetNums };
+    }
+    
+    async function fetchLatestDraw() {
+        try {
+            const response = await fetch(API_URL + '?t=' + Date.now(), { method: 'GET', mode: 'cors' });
+            const json = await response.json();
+            let list = json.data?.list || json.list || json.data || [];
+            if (!Array.isArray(list) || list.length === 0) return null;
+            list.sort((a,b) => (BigInt(b.issueNumber || b.issue || 0) - BigInt(a.issueNumber || a.issue || 0)) > 0 ? 1 : -1);
+            const latestRow = list[0];
+            let rawIssue = latestRow.issueNumber || latestRow.issue || "---";
+            let rawNumber = latestRow.number !== undefined ? latestRow.number : "0";
+            let numStr = rawNumber.toString();
+            let match = numStr.match(/\d/);
+            let digit = match ? parseInt(match[0]) : 0;
+            digit = Math.min(9, Math.max(0, digit));
+            return { issue: rawIssue, digit: digit };
+        } catch(err) { console.error("API fetch error:", err); return null; }
+    }
+    
+    async function runLiveSync() {
+        if(fetchLock) return;
+        fetchLock = true;
+        try {
+            const latest = await fetchLatestDraw();
+            if(!latest) { fetchLock = false; return; }
+            let displayPeriod = "---";
+            if(latest.issue !== "---") {
+                try { let base = BigInt(latest.issue); displayPeriod = (base + 1n).toString(); } catch(e) { displayPeriod = latest.issue; }
+            }
+            if(periodSpan) periodSpan.innerText = displayPeriod;
+            if(lastResultSpan) lastResultSpan.innerText = classifyResultFromDigit(latest.digit);
+            
+            if(lastProcessedIssue === null) {
+                lastProcessedIssue = latest.issue;
+                last5Results = [classifyResultFromDigit(latest.digit)];
+                last5Numbers = [latest.digit];
+                let pred = generatePredictionFromHistory(last5Results, last5Numbers);
+                pendingPrediction = { bigSmall: pred.bigSmall, numbers: pred.numbers };
+                pendingPeriod = latest.issue;
+                updatePredictionUI(pendingPrediction);
+                fetchLock = false;
+                return;
+            }
+            
+            if(latest.issue !== lastProcessedIssue) {
+                if(pendingPrediction && pendingPeriod === lastProcessedIssue) {
+                    const status = evaluate(pendingPrediction, latest.digit);
+                    addHistoryOnce(latest.issue, pendingPrediction, latest.digit, status);
+                }
+                let newResultBS = classifyResultFromDigit(latest.digit);
+                last5Results.unshift(newResultBS);
+                last5Numbers.unshift(latest.digit);
+                if(last5Results.length > 5) last5Results.pop();
+                if(last5Numbers.length > 5) last5Numbers.pop();
+                let pred = generatePredictionFromHistory(last5Results, last5Numbers);
+                pendingPrediction = { bigSmall: pred.bigSmall, numbers: pred.numbers };
+                pendingPeriod = latest.issue;
+                updatePredictionUI(pendingPrediction);
+                lastProcessedIssue = latest.issue;
+                if(predPanel) predPanel.classList.add('update-flash');
+                setTimeout(()=> predPanel.classList.remove('update-flash'), 400);
+            } else {
+                if(!pendingPrediction) {
+                    let pred = generatePredictionFromHistory(last5Results, last5Numbers);
+                    pendingPrediction = { bigSmall: pred.bigSmall, numbers: pred.numbers };
+                    pendingPeriod = latest.issue;
+                    updatePredictionUI(pendingPrediction);
+                }
+            }
+        } catch(e) { console.warn(e); }
+        fetchLock = false;
+    }
+    
+    // 精确30秒同步计时器 (基于系统时间的30秒边界)
+    function getSecondsToNextDraw() {
+        const now = Math.floor(Date.now() / 1000);
+        const remainder = now % 30;
+        return remainder === 0 ? 0 : 30 - remainder;
+    }
+    
+    function updateTimerAndCheck() {
+        let remaining = getSecondsToNextDraw();
+        if(timerDisplay) timerDisplay.innerHTML = `<i class="far fa-clock"></i> Next: ${remaining}s`;
+        if(remaining === 0) {
+            // 整秒边界触发拉取
+            runLiveSync();
+        }
+    }
+    
+    function startPreciseTimer() {
+        if(timerInterval) clearInterval(timerInterval);
+        updateTimerAndCheck();
+        timerInterval = setInterval(() => {
+            updateTimerAndCheck();
+        }, 1000);
+    }
+    
+const _k = [82,83,95,88,85,77,79,78];
+const SECRET_KEY = String.fromCharCode(..._k);
+
+// 登录验证 + 初始化
+loginBtn.addEventListener('click', async () => {
+    const uid = uidInput.value.trim();
+    const pwd = pwdInput.value;
+
+    if(uid.length < 7) {
+        alert("INTER VALID GAME UID✅");
+        return;
+    }
+
+    if(pwd !== SECRET_KEY) {
+        alert("WRONG KEY PLEASE CONTACT📥 @REHMANxSUMON");
+        return;
+    }
+
+    loginScreen.style.display = 'none';
+    dashboard.style.display = 'block';
+
+    await runLiveSync();
+    startPreciseTimer();
+});
+</script>
+</body>
+</html>
